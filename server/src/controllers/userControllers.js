@@ -5,7 +5,7 @@ export const updateProfileData = async (req, res) => {
   try {
     const user = req.userData;
     const { fullName, username } = req.body;
-
+    console.log(user)
     const updatedUser = await User.findOneAndUpdate(
       {
         _id: user._id

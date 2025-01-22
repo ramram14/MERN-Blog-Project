@@ -1,4 +1,6 @@
 import jwt from 'jsonwebtoken';
+import slugify from 'slugify';
+import Blog from '../models/blogModel.js';
 
 export const makeJWTToken = (tokenData, res) => {
   const token = jwt.sign(tokenData, process.env.JWT_SECRET_KEY, { expiresIn: '7d' })
@@ -19,3 +21,21 @@ export const formatFieldName = (fieldName) => {
     .replace(/([a-z])([A-Z])/g, '$1 $2')
     .replace(/^./, (str) => str.toUpperCase());
 };
+
+export const generateSlug = async (title) => {
+  try {
+    let slug = slugify(title, { lower: true, strict: true });
+    let uniqueSlug = slug;
+    // if there is same existing title name we start slug counter from 2
+    let counter = 2
+
+    while (await Blog.exists({ slug: uniqueSlug })) {
+      uniqueSlug = `${slug}-${counter}`
+    }
+
+    return uniqueSlug
+  } catch (error) {
+    console.log('Error generating unique slug:', error);
+    throw new Error('Failed to generate unique slug');
+  }
+}

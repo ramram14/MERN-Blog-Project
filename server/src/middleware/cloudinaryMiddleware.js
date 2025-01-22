@@ -17,6 +17,14 @@ export const uploadImage = async (req, res, next) => {
       setTimeout(() => reject(new Error('Request Timeout')), ms)
     ))
 
+    // if req.file is undefined means user not send the image we send status 400
+    if (!req.file) {
+      return res.status(400).json({
+        success: false,
+        message: 'Image is Required',
+        errorMessage: 'Image is Reqired'
+      });
+    }
     const uploadPromise = await cloudinary.uploader.upload(req.file.path, {
       folder: 'MERN Blog',
       resource_type: 'image'

@@ -22,11 +22,12 @@ const blogSchema = mongoose.Schema({
     ref: 'User',
     required: true
   },
-  comment: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Comment'
-  }],
-  likeUser: [{
+  category: {
+    type: String,
+    enum: ['Lifestyle', 'Hobby', 'Finance', 'Health', 'Philosophy', 'Technology', 'Self Improvement', 'Food', 'Education', 'Entertainment'],
+    required: true,
+  },
+  likeUsers: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
   }]

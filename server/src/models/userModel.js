@@ -26,19 +26,11 @@ const userSchema = mongoose.Schema({
   profileImage: {
     type: String
   },
-  blog: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Blog'
-  }],
-  blogLike: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Blog'
-  }],
-  comemnt: [{
+  comments: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Comment'
   }],
-  commentLike: [{
+  commentLikes: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Comment'
   }]

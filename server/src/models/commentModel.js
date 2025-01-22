@@ -15,7 +15,7 @@ const commentSchema = mongoose.Schema({
     ref: 'Blog',
     required: true
   },
-  LikeUser: [{
+  LikeUsers: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
   }]

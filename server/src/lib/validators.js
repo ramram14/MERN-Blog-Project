@@ -25,4 +25,16 @@ export const updateProfileDataEmailSchema = z.object({
 export const updateProfileDataPasswordSchema = z.object({
   newPassword: z.string().min(6, 'Must be at least 6 characters long'),
   oldPassword: z.string().min(6, 'Must be at least 6 characters long')
+});
+export const createBlogSchema = z.object({
+  title: z.string().min(5, 'Must be at least 5 characters long'),
+  content: z.string(),
+  category: z.enum(['Lifestyle', 'Hobby', 'Finance', 'Health', 'Philosophy', 'Technology', 'Self Improvement', 'Food', 'Education', 'Entertainment'])
+});
+export const updateBlogDataSchema = z.object({
+  content: z.string().optional(),
+  category: z.enum(['Lifestyle', 'Hobby', 'Finance', 'Health', 'Philosophy', 'Technology', 'Self Improvement', 'Food', 'Education', 'Entertainment']).optional()
+});
+export const updateBlogTitleSchema = z.object({
+  title: z.string().min(5, 'Must be at least 5 characters long')
 })
