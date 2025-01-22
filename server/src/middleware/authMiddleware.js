@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken';
+import User from '../models/userModel.js';
 
 const authMiddleware = async (req, res, next) => {
   try {
@@ -26,6 +27,8 @@ const authMiddleware = async (req, res, next) => {
         message: 'Unauthorized - User not found'
       })
     }
+
+    // For each route that needs token protection, we always send new user data to that route and save it to req for easy access
     req.userData = user;
     next();
   } catch (error) {

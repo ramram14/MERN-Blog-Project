@@ -1,6 +1,7 @@
 import { ZodError } from 'zod';
 import { formatFieldName } from '../lib/utils.js';
 
+// This middleware function is for validating data with zodSchema, if the data we received are not valid, we will return 400 status code
 const validateData = (schema) => {
   return (req, res, next) => {
     try {

@@ -12,8 +12,10 @@ export const makeJWTToken = (tokenData, res) => {
   return token
 }
 
+// We used this for formatting error that comes from zod validation
 export const formatFieldName = (fieldName) => {
   return fieldName
-    .replace(/([a-z])([A-Z])/g, '$1 $2')  // Menambahkan spasi sebelum huruf kapital
-    .replace(/^./, (str) => str.toUpperCase()); // Mengubah huruf pertama menjadi kapital
+    // Add space before capital letters for camel case words and capitalize it at first letter to be more readable for human
+    .replace(/([a-z])([A-Z])/g, '$1 $2')
+    .replace(/^./, (str) => str.toUpperCase());
 };
