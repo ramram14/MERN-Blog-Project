@@ -1,5 +1,7 @@
 import { generateSlug } from '../lib/utils.js';
 import Blog from '../models/blogModel.js';
+import Comment from '../models/commentModel.js';
+
 
 export const createBlog = async (req, res) => {
   try {
@@ -63,12 +65,27 @@ export const getBlogBySlug = async (req, res) => {
     const blog = await Blog.findOne({
       slug
     })
+      .populate({
+        path: 'author',
+        select: '_id fullName username profileImage'
+      })
+      .populate({
+        path: 'comments',
+        populate: {
+          path: 'author',
+          select: '_id username profileImage'
+        }
+      })
     if (!blog) {
       return res.status(404).json({
         success: false,
         message: 'Blog not found'
       })
     }
+    const comments = await Comment.find({
+      blog: blog._id
+    })
+
     return res.status(200).json({
       success: true,
       message: 'Blog fetched successfully',

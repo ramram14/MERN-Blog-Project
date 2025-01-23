@@ -37,4 +37,7 @@ export const updateBlogDataSchema = z.object({
 });
 export const updateBlogTitleSchema = z.object({
   title: z.string().min(5, 'Must be at least 5 characters long')
+});
+export const createCommentSchema = z.object({
+  content: z.string().max(1000, 'Must be at most 1000 characters')
 })
