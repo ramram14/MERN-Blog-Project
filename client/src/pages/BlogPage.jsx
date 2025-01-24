@@ -9,6 +9,7 @@ import UserIconSmall from '../components/profile/UserIconSmall';
 import CommentBlogContainer from '../components/blog/CommentBlogContainer';
 import { FaEdit } from "react-icons/fa";
 import { useAuthStore } from '../store/authStore';
+import NotFoundPage from './NotFoundPage';
 
 export default function BlogPage() {
   const { slug } = useParams();
@@ -22,6 +23,11 @@ export default function BlogPage() {
     }
     fetchData()
   }, [slug, setBlog])
+
+  if (blog.length === 0) {
+    return <NotFoundPage />
+  }
+
   return (
     <>
       <Navbar />

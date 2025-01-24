@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import { FaSearch } from "react-icons/fa";
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 export default function NavSearch() {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const [inputSearch, setInputSearch] = useState(searchParams.get('search') || '')
+  const navigate = useNavigate();
   return (
     <div className='flex items-center gap-2'>
       <input
@@ -16,7 +17,7 @@ export default function NavSearch() {
       />
       <button
         type='button'
-        onClick={() => setSearchParams({ search: inputSearch })}
+        onClick={() => navigate(`/?search=${inputSearch}`)}
       >
         <FaSearch
           className='text-xl md:text-2xl bg-slate-100 cursor-pointer'

@@ -37,11 +37,10 @@ export default function TopicDropdown() {
           hidden={!isCategoryOpen}
           className='flex flex-col w-fit absolute rounded-b-xl overflow-hidden p-1 right-0 md:right-auto md:-ml-4'
         >
-          {categoryBlog.sort().map((category) => {
+          {categoryBlog.sort().map((category, i) => {
             return (
               <button
-                key={category._id}
-
+                key={i}
                 type='button'
                 onClick={() => {
                   setIsCategoryOpen(false)

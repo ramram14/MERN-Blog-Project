@@ -6,6 +6,7 @@ import Profile from './pages/Profile'
 import BlogCreate from './pages/BlogCreate'
 import BlogPage from './pages/BlogPage'
 import BlogEdit from './pages/BlogEdit'
+import NotFoundPage from './pages/NotFoundPage'
 
 function App() {
 
@@ -19,6 +20,7 @@ function App() {
         <Route path='/blog/create' element={<BlogCreate />} />
         <Route path='/:slug' element={<BlogPage />} />
         <Route path='/:slug/edit' element={<BlogEdit />} />
+        <Route path='/*' element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>
   )
