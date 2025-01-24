@@ -1,10 +1,10 @@
 import express from 'express';
-import { checkBlogSlugIsValid, createBlog, deleteBlog, getAllBlogs, getBlogBySlug, updateBlogData, updateBlogImage, updateBlogTitle } from '../controllers/blogControllers.js';
+import { checkBlogSlugIsValid, createBlog, deleteBlog, getAllBlogs, getBlogBySlug, updateBlogData } from '../controllers/blogControllers.js';
 import authMiddleware from '../middleware/authMiddleware.js';
 import upload, { handleMulterError } from '../middleware/multerMiddleware.js';
 import { validateData } from '../middleware/validationMiddleware.js';
-import { createBlogSchema, updateBlogDataSchema, updateBlogTitleSchema } from '../lib/validators.js';
-import { uploadImage } from '../middleware/cloudinaryMiddleware.js';
+import { createBlogSchema, updateBlogDataSchema } from '../lib/validators.js';
+
 
 const router = express.Router();
 
@@ -13,7 +13,6 @@ router.post('/',
   authMiddleware,
   upload.single('image'),
   handleMulterError,
-  uploadImage,
   validateData(createBlogSchema),
   createBlog
 )
@@ -28,27 +27,12 @@ router.get('/:slug', getBlogBySlug);
 router.patch('/:slug',
   checkBlogSlugIsValid,
   authMiddleware,
+  upload.single('image'),
+  handleMulterError,
   validateData(updateBlogDataSchema),
   updateBlogData
 );
 
-// Update blog tile, we seperate it because if title change it means slug ahs need to change either
-router.patch('/:slug/title',
-  checkBlogSlugIsValid,
-  authMiddleware,
-  validateData(updateBlogTitleSchema),
-  updateBlogTitle
-)
-
-// Update blog image
-router.patch('/:slug/image',
-  checkBlogSlugIsValid,
-  authMiddleware,
-  upload.single('image'),
-  handleMulterError,
-  uploadImage,
-  updateBlogImage
-)
 
 // Delete blog
 router.delete('/:slug',

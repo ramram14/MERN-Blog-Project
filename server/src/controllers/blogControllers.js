@@ -1,3 +1,4 @@
+import { updateImage, uploadImageOnCloudinary } from '../lib/cloudinary.js';
 import { generateSlug } from '../lib/utils.js';
 import Blog from '../models/blogModel.js';
 import Comment from '../models/commentModel.js';
@@ -6,7 +7,21 @@ import Comment from '../models/commentModel.js';
 export const createBlog = async (req, res) => {
   try {
     const user = req.userData;
-    const imageUrl = req.imageUrl;
+    if (!req.file) {
+      return res.status(400).json({
+        success: false,
+        message: 'Image is Required',
+        errorMessage: 'Image is Reqired'
+      });
+    }
+    const localFilePath = req.file.path;
+    const imageUrl = await uploadImageOnCloudinary(localFilePath);
+    if (!imageUrl) {
+      return res.status(500).json({
+        success: false,
+        message: 'Cannot upload image, please try again',
+      })
+    }
     const { title, content, category } = req.body;
     const slug = await generateSlug(title);
 
@@ -104,18 +119,34 @@ export const getBlogBySlug = async (req, res) => {
 export const updateBlogData = async (req, res) => {
   try {
     const { slug } = req.params;
-    const { content, category } = req.body;
-    const blog = await Blog.findOneAndUpdate({
+    const { title, content, category } = req.body;
+    const blog = req.blog;
+    let imageUrl = null;
+    if (req.file) {
+      const localFilePath = req.file.path;
+      const newImageUrl = await updateImage(localFilePath, blog.image);
+      if (!newImageUrl) {
+        return res.status(500).json({
+          success: false,
+          message: 'Cannot upload image, please try again',
+        })
+      }
+
+      imageUrl = newImageUrl
+    }
+    const newBlog = await Blog.findOneAndUpdate({
       slug
     }, {
       // If user not give any data then it will not update
+      title: title || blog.title,
       content: content || blog.content,
-      category: category || blog.category
+      category: category || blog.category,
+      image: imageUrl || blog.image
     }, {
       new: true
     });
 
-    if (!blog) {
+    if (!newBlog) {
       return res.status(404).json({
         success: false,
         message: 'Blog not found'
@@ -136,42 +167,6 @@ export const updateBlogData = async (req, res) => {
 };
 
 
-// Update blog tile, we seperate it because if title change it means slug has need to be change either
-export const updateBlogTitle = async (req, res) => {
-  try {
-    const { slug } = req.params;
-    const { title } = req.body;
-    const newSlug = await generateSlug(title);
-
-    const blog = await Blog.findOneAndUpdate({
-      slug
-    }, {
-      title,
-      slug: newSlug
-    }, {
-      new: true
-    });
-
-    if (!blog) {
-      return res.status(404).json({
-        success: false,
-        message: 'Blog not found'
-      })
-    };
-
-    return res.status(200).json({
-      success: true,
-      message: 'Blog title updated successfully',
-      data: blog
-    })
-  } catch (error) {
-    console.log('Error in updateBlogTitle controller', error.message);
-    return res.status(500).json({
-      success: false,
-      message: 'Internal Server Error'
-    });
-  }
-};
 
 // We do the first prevention if the slug given by the user is not in the database, this is done to prevent the image from being uploaded when the blog does not exist or prevent processing the data when the blog does not exist to.
 export const checkBlogSlugIsValid = async (req, res, next) => {
@@ -183,40 +178,10 @@ export const checkBlogSlugIsValid = async (req, res, next) => {
       message: 'Blog not found'
     })
   }
+  req.blog = blog;
   next()
 };
 
-export const updateBlogImage = async (req, res) => {
-  try {
-    const { slug } = req.params;
-    const imageUrl = req.imageUrl;
-    const blog = await Blog.findOneAndUpdate({
-      slug
-    }, {
-      image: imageUrl
-    }, {
-      new: true
-    });
-
-    if (!blog) {
-      return res.status(404).json({
-        success: false,
-        message: 'Blog not found'
-      })
-    };
-
-    return res.status(200).json({
-      success: true,
-      message: 'Blog image updated successfully'
-    });
-  } catch (error) {
-    console.log('Error in updateBlogImage controller', error.message);
-    return res.status(500).json({
-      success: false,
-      message: 'Internal Server Error'
-    });
-  }
-};
 
 export const deleteBlog = async (req, res) => {
   try {

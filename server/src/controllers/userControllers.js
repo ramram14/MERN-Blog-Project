@@ -1,17 +1,18 @@
+import { updateImage } from '../lib/cloudinary.js';
 import User from '../models/userModel.js';
 import bcrypt from 'bcryptjs';
 
 export const updateProfileData = async (req, res) => {
   try {
     const user = req.userData;
-    const { fullName, username } = req.body;
-    console.log(user)
+    const { fullName, username, email } = req.body;
     const updatedUser = await User.findOneAndUpdate(
       {
         _id: user._id
       }, {
       fullName,
-      username
+      username,
+      email
     }, {
       new: true
     })
@@ -130,7 +131,22 @@ export const updateProfileDataPassword = async (req, res) => {
 export const updateProfileDataImage = async (req, res) => {
   try {
     const user = req.userData;
-    const imageUrl = req.imageUrl
+    if (!req.file) {
+      return res.status(400).json({
+        success: false,
+        message: 'Image is Required',
+        errorMessage: 'Image is Reqired'
+      });
+    }
+    const localFilePath = req.file.path;
+    const imageUrl = await updateImage(localFilePath, user.profileImage);
+
+    if (!imageUrl) {
+      return res.status(500).json({
+        success: false,
+        message: 'Cannot upload image, please try again',
+      })
+    }
     const updatedUser = await User.findOneAndUpdate(
       {
         _id: user._id
