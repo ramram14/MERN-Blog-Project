@@ -19,6 +19,7 @@ const blogSchema = mongoose.Schema({
   },
   category: {
     type: String,
+    enum: ['Lifestyle', 'Hobby', 'Finance', 'Health', 'Philosophy', 'Technology', 'Self Improvement', 'Food', 'Education', 'Entertainment'],
     required: true
   },
   author: {

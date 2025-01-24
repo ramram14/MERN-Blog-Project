@@ -50,15 +50,29 @@ export const createBlog = async (req, res) => {
 
 export const getAllBlogs = async (req, res) => {
   try {
-    const blogs = await Blog.find({},
-      '_id title image content, slug category author likeUsers createdAt updatedAt'
-    )
-      .populate({
-        path: 'author',
-        select: '_id fullName username'
-      }).sort({ createdAt: -1 });
-
-
+    const { search } = req.query
+    let blogs;
+    if (search) {
+      blogs = await Blog.find({
+        $or: [
+          { title: { $regex: search, $options: 'i' } },
+          { content: { $regex: search, $options: 'i' } },
+          { category: { $regex: search, $options: 'i' } },
+        ]
+      }, '_id title image slug category author likeUsers createdAt updatedAt')
+        .populate({
+          path: 'author',
+          select: '_id fullName username'
+        }).sort({ createdAt: -1 });
+    } else {
+      blogs = await Blog.find({},
+        '_id title image slug category author likeUsers createdAt updatedAt'
+      )
+        .populate({
+          path: 'author',
+          select: '_id fullName username'
+        }).sort({ createdAt: -1 });
+    }
 
     return res.status(200).json({
       success: true,
@@ -115,6 +129,33 @@ export const getBlogBySlug = async (req, res) => {
     })
   }
 };
+
+export const getBlogsByCategory = async (req, res) => {
+  try {
+    const { category } = req.query;
+    if (!category) {
+      return res.status(400).json({ message: 'Category is required' });
+    }
+
+    const blogs = await Blog.find({ category },
+      '_id title image slug category author likeUsers createdAt updatedAt'
+    )
+      .populate('author', '_id fullName username')
+      .sort({ createdAt: -1 });
+
+    return res.status(200).json({
+      success: true,
+      message: 'Blogs fetched successfully',
+      data: blogs
+    })
+  } catch (error) {
+    console.log('Error in getBlogsByCategory controller', error.message)
+    return res.status(500).json({
+      success: false,
+      message: 'Internal Server Error'
+    })
+  }
+}
 
 export const updateBlogData = async (req, res) => {
   try {
