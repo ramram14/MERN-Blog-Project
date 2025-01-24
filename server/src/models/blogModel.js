@@ -27,6 +27,10 @@ const blogSchema = mongoose.Schema({
     ref: 'User',
     required: true
   },
+  views: {
+    type: Number,
+    default: 0
+  },
   comments: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Comment'

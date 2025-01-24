@@ -50,23 +50,23 @@ export const createBlog = async (req, res) => {
 
 export const getAllBlogs = async (req, res) => {
   try {
-    const { search } = req.query
+    const { search, category } = req.query
     let blogs;
-    if (search) {
+    if (search || category) {
       blogs = await Blog.find({
         $or: [
-          { title: { $regex: search, $options: 'i' } },
-          { content: { $regex: search, $options: 'i' } },
-          { category: { $regex: search, $options: 'i' } },
+          { title: { $regex: search || category, $options: 'i' } },
+          { content: { $regex: search || category, $options: 'i' } },
+          { category: { $regex: search || category, $options: 'i' } },
         ]
-      }, '_id title image slug category author likeUsers createdAt updatedAt')
+      }, '_id title image slug category author likeUsers createdAt updatedAt views')
         .populate({
           path: 'author',
           select: '_id fullName username'
         }).sort({ createdAt: -1 });
     } else {
       blogs = await Blog.find({},
-        '_id title image slug category author likeUsers createdAt updatedAt'
+        '_id title image slug category author likeUsers createdAt updatedAt views'
       )
         .populate({
           path: 'author',
@@ -91,8 +91,12 @@ export const getAllBlogs = async (req, res) => {
 export const getBlogBySlug = async (req, res) => {
   try {
     const { slug } = req.params;
-    const blog = await Blog.findOne({
+    const blog = await Blog.findOneAndUpdate({
       slug
+    }, {
+      $inc: { views: 1 }
+    }, {
+      new: true
     })
       .populate({
         path: 'author',
