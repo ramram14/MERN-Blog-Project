@@ -7,8 +7,7 @@ import { useBlogStore } from '../store/blogStore';
 import { axiosClient } from '../lib/axios';
 import toast from 'react-hot-toast';
 import { formatError } from '../lib/utils';
-
-const categoryBlog = ['Lifestyle', 'Hobby', 'Finance', 'Health', 'Philosophy', 'Technology', 'Self Improvement', 'Food', 'Education', 'Entertainment']
+import { categoryBlog } from '../lib/data';
 
 
 export default function BlogEdit() {

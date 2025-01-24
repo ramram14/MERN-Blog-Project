@@ -1,7 +1,7 @@
-import { timeAgo } from '../lib/utils'
-import { useAuthStore } from '../store/authStore';
-import { useBlogStore } from '../store/blogStore'
-import UserIconSmall from './UserIconSmall'
+import { timeAgo } from '../../lib/utils'
+import { useAuthStore } from '../../store/authStore';
+import { useBlogStore } from '../../store/blogStore'
+import UserIconSmall from '../profile/UserIconSmall'
 import { FaTrashAlt } from "react-icons/fa";
 
 

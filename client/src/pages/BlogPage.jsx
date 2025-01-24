@@ -2,11 +2,11 @@ import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { timeAgo } from '../lib/utils';
 import DisplayHTML from '../components/DisplayHTML';
-import Navbar from '../components/Navbar';
-import FormComment from '../components/FormComment';
+import Navbar from '../components/navbar/Navbar';
+import FormComment from '../components/blog/FormComment';
 import { useBlogStore } from '../store/blogStore';
-import UserIconSmall from '../components/UserIconSmall';
-import CommentBlogContainer from '../components/CommentBlogContainer';
+import UserIconSmall from '../components/profile/UserIconSmall';
+import CommentBlogContainer from '../components/blog/CommentBlogContainer';
 import { FaEdit } from "react-icons/fa";
 import { useAuthStore } from '../store/authStore';
 

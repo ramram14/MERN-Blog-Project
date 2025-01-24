@@ -1,7 +1,8 @@
-import React from 'react';
 import { useAuthStore } from '../store/authStore';
 import LoadingButton from '../components/LoadingButton';
 import { useNavigate } from 'react-router';
+import { useState } from 'react';
+import { FaRegEye, FaRegEyeSlash } from 'react-icons/fa';
 
 export default function SignInPage() {
   const { signIn, isLoading, isAuthenticated } = useAuthStore();
@@ -9,12 +10,12 @@ export default function SignInPage() {
   if (isAuthenticated) {
     navigate('/', { replace: true });
   };
-  const [userData, setUserData] = React.useState({
+  const [userData, setUserData] = useState({
     email: '',
     password: '',
   });
-  const [errorInvalidFields, setErrorInvalidFields] = React.useState([]);
-
+  const [errorInvalidFields, setErrorInvalidFields] = useState([]);
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleSignIn = async () => {
     setErrorInvalidFields([]);
@@ -27,6 +28,11 @@ export default function SignInPage() {
   return (
     <main className='w-screen h-screen relative'>
       <section className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-lg space-y-6 border-2 p-2 md:p-4 rounded-md'>
+        <h1 className='text-2xl md:text-3xl font-semibold w-fit mx-auto '>Welcome to
+          <span className='bg-orange-500 hover:bg-orange-600 rounded-xl p-2'>
+            Write Sphere
+          </span>
+        </h1>
         <h1 className='text-2xl md:text-3xl font-semibold w-fit mx-auto'>Sign In</h1>
         <div>
           <label htmlFor="email" className='text-xs md:text-lg font-semibold'>Email</label>
@@ -41,14 +47,22 @@ export default function SignInPage() {
         </div>
         <div>
           <label htmlFor="password" className='text-xs md:text-lg font-semibold'>Password</label>
-          <input
-            type="password"
-            id='password'
-            name='password'
-            placeholder='Password'
-            className='border w-full p-2 rounded-lg'
-            onChange={(e) => setUserData({ ...userData, password: e.target.value })}
-          />
+          <div className='relative'>
+            <input
+              type="password"
+              id='password'
+              name='password'
+              placeholder='Password'
+              className='border w-full p-2 rounded-lg'
+              onChange={(e) => setUserData({ ...userData, password: e.target.value })}
+            />
+            <div
+              onClick={() => setShowPassword(!showPassword)}
+              className='absolute right-2 top-1/2 -translate-y-1 cursor-pointer'
+            >
+              {showPassword ? <FaRegEye /> : <FaRegEyeSlash />}
+            </div>
+          </div>
         </div>
         {
           errorInvalidFields.length > 0 && (

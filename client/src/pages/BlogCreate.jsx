@@ -5,10 +5,10 @@ import LoadingButton from '../components/LoadingButton';
 import { axiosClient } from '../lib/axios';
 import { formatError } from '../lib/utils';
 import toast from 'react-hot-toast';
-
+import { categoryBlog } from '../lib/data';
 
 export default function BlogCreate() {
-  const categoryBlog = ['Lifestyle', 'Hobby', 'Finance', 'Health', 'Philosophy', 'Technology', 'Self Improvement', 'Food', 'Education', 'Entertainment']
+
   const [inputData, setInputData] = useState({
     title: '',
     content: '',

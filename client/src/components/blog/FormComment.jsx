@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { useAuthStore } from '../store/authStore'
-import UserIconSmall from './UserIconSmall';
-import LoadingButton from './LoadingButton';
-import { useBlogStore } from '../store/blogStore';
+import { useAuthStore } from '../../store/authStore';
+import UserIconSmall from '../profile/UserIconSmall';
+import LoadingButton from '../LoadingButton';
+import { useBlogStore } from '../../store/blogStore';
 
 
 

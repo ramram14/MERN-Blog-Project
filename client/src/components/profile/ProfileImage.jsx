@@ -1,6 +1,6 @@
 import React from 'react'
 import { FaUserCircle, FaTrashAlt, FaCheck } from 'react-icons/fa'
-import { useAuthStore } from '../store/authStore'
+import { useAuthStore } from '../../store/authStore'
 import { RiLoader5Fill } from 'react-icons/ri'
 export default function ProfileImage() {
   const { user, updateProfileImage, isLoading } = useAuthStore()
