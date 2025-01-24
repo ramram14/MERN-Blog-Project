@@ -2,7 +2,9 @@ import { create } from 'zustand';
 import { axiosClient } from '../lib/axios';
 import { formatError } from '../lib/utils';
 import toast from 'react-hot-toast';
+import { useAuthStore } from './authStore';
 
+const { user } = useAuthStore.getState();
 export const useBlogStore = create((set, get) => ({
   blog: [],
   slug: '',
@@ -35,7 +37,6 @@ export const useBlogStore = create((set, get) => ({
     };
     try {
       const { data } = await axiosClient.post(`/api/comment/${blogId}`, content)
-
       if (data.success) {
         await get().refreshBlog()
       }
@@ -62,6 +63,37 @@ export const useBlogStore = create((set, get) => ({
       formatError(error)
     } finally {
       set({ loading: false })
+    }
+  },
+
+  likeOrUnlikeComment: async (commentId) => {
+    try {
+      const { data } = await axiosClient.post(`/api/comment/${commentId}/like`)
+      if (data.success) {
+        set((prev) => {
+          const userId = user._id;
+          return {
+            blog: {
+              ...prev.blog,
+              comments: prev.blog.comments.map((comment) => {
+                if (comment._id === commentId) {
+                  if (comment.LikeUsers.includes(userId)) {
+                    comment.LikeUsers = comment.LikeUsers.filter((id) => id !== userId)
+                    comment.likesNumber = comment.likesNumber - 1
+                  } else {
+                    comment.LikeUsers.push(userId)
+                    comment.likesNumber = comment.likesNumber + 1
+                  }
+                }
+                return comment
+              })
+            }
+          }
+        })
+      }
+    } catch (error) {
+      console.log(error)
+      formatError(error)
     }
   }
 }))

@@ -5,6 +5,7 @@ import { FaSignOutAlt, } from "react-icons/fa";
 import { RiLoader5Fill } from 'react-icons/ri';
 import ProfileData from '../components/profile/ProfileData';
 import { useNavigate } from 'react-router-dom';
+import PageDirection from '../components/PageDirection';
 
 export default function Profile() {
   const { signOut, isLoading, isAuthenticated } = useAuthStore();
@@ -13,7 +14,8 @@ export default function Profile() {
     <>
       <Navbar />
       <div className='max-w-4xl mx-auto border mt-5 rounded-md overflow-hidden'>
-        <h1 className='text-2xl font-bold text-center p-2 border-b-2 bg-amber-600 '>My Profile</h1>
+        <PageDirection direction={'Profile'} />
+
         <section className='grid md:grid-cols-2  p-2 gap-2 md:gap-4'>
           <ProfileImage />
 
