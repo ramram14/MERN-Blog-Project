@@ -49,5 +49,19 @@ export const useBlogStore = create((set, get) => ({
     } finally {
       set({ loading: false })
     }
+  },
+
+  deleteComment: async (commentId) => {
+    set({ loading: true })
+    try {
+      const { data } = await axiosClient.delete(`/api/comment/${commentId}`)
+      if (data.success) {
+        await get().refreshBlog()
+      }
+    } catch (error) {
+      formatError(error)
+    } finally {
+      set({ loading: false })
+    }
   }
 }))

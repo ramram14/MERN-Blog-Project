@@ -7,7 +7,6 @@ import { useNavigate } from 'react-router';
 export default function HomePage() {
   const [data, setData] = useState([])
   const navigate = useNavigate()
-  console.log(data)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -24,7 +23,6 @@ export default function HomePage() {
     fetchData();
   }, [])
 
-  console.log(data)
   return (
     <>
       <Navbar />
@@ -46,7 +44,7 @@ export default function HomePage() {
                 </div>
 
                 <div className='p-2 text-xl font-medium h-32 relative'>
-                  <p>{item.category}</p>
+                  <p className='text-sm text-slate-600'>{item.category}</p>
                   <h1>{item.title}</h1>
 
                   <span className='absolute bottom-0 left-0'>@{item.author.username}</span>

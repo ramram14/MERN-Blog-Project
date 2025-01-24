@@ -51,7 +51,7 @@ export const createBlog = async (req, res) => {
 export const getAllBlogs = async (req, res) => {
   try {
     const blogs = await Blog.find({},
-      '_id title image content, slug author likeUsers createdAt updatedAt'
+      '_id title image content, slug category author likeUsers createdAt updatedAt'
     )
       .populate({
         path: 'author',
@@ -121,7 +121,11 @@ export const updateBlogData = async (req, res) => {
     const { slug } = req.params;
     const { title, content, category } = req.body;
     const blog = req.blog;
-    let imageUrl = null;
+    let imageUrl;
+    let newSlug;
+    if (title) {
+      newSlug = await generateSlug(title);
+    }
     if (req.file) {
       const localFilePath = req.file.path;
       const newImageUrl = await updateImage(localFilePath, blog.image);
@@ -141,7 +145,8 @@ export const updateBlogData = async (req, res) => {
       title: title || blog.title,
       content: content || blog.content,
       category: category || blog.category,
-      image: imageUrl || blog.image
+      image: imageUrl || blog.image,
+      slug: newSlug || blog.slug
     }, {
       new: true
     });
@@ -155,7 +160,8 @@ export const updateBlogData = async (req, res) => {
 
     return res.status(200).json({
       success: true,
-      message: 'Blog updated successfully'
+      message: 'Blog updated successfully',
+      data: newBlog
     })
   } catch (error) {
     console.log('Error in updateBlogData controller', error.message)

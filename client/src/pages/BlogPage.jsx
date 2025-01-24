@@ -25,7 +25,7 @@ export default function BlogPage() {
   return (
     <>
       <Navbar />
-      <section className='max-w-6xl mx-auto space-y-6 p-2 md:p-4 border-2 '>
+      <section className='max-w-6xl mx-auto space-y-6 p-2 md:p-4 border-2 my-6 rounded-md'>
         {blog && (
           <div>
             <div className='border-b-2 p-2'>
@@ -36,7 +36,9 @@ export default function BlogPage() {
                     <h1>@{blog.author?.username}</h1>
                     <h1>{blog.author?.fullName}</h1>
                   </div>
+
                 </div>
+
 
                 {blog.author?._id === user._id && (
                   <button
@@ -50,6 +52,7 @@ export default function BlogPage() {
                 )}
 
               </div>
+              <p className=' text-slate-600 p-2'>{blog.category}</p>
               <div className='bg-slate-100 w-full h-52 md:h-72 lg:h-96'>
                 <img
                   src={blog.image}
@@ -57,6 +60,7 @@ export default function BlogPage() {
                   className='aspect-video object-cover mx-auto h-full'
                 />
               </div>
+
               <h1 className='text-2xl font-bold text-center p-4'>{blog.title}</h1>
               <div className='p-2 mt-2 md:mt-4'>
                 <DisplayHTML
@@ -65,6 +69,7 @@ export default function BlogPage() {
               </div>
 
               <p className='text-xs text-end'>Created at: {timeAgo(blog.createdAt)}</p>
+              <p className='text-xs text-end'>Updated at: {timeAgo(blog.updatedAt)}</p>
             </div>
 
             <div className='space-y-4'>

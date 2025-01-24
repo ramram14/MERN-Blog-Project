@@ -70,6 +70,27 @@ export const useAuthStore = create()(
         }
       },
 
+      updateProfileData: async (formData) => {
+        try {
+          set({ isLoading: true })
+          toast.dismiss()
+          const { data } = await axiosClient.patch('/api/user/profile-data', formData)
+          if (data.success) {
+            set({
+              user: data.data,
+            })
+            toast.success(data.message)
+            return
+          }
+        } catch (error) {
+          formatError(error)
+          return error.response.data
+
+        } finally {
+          set({ isLoading: false })
+        }
+      },
+
       updateProfileImage: async (formData) => {
         try {
           set({ isLoading: true })

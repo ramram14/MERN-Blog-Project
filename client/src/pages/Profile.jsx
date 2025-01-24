@@ -3,9 +3,10 @@ import { useAuthStore } from '../store/authStore';
 import ProfileImage from '../components/ProfileImage';
 import { FaSignOutAlt, } from "react-icons/fa";
 import { RiLoader5Fill } from 'react-icons/ri';
+import ProfileData from '../components/ProfileData';
 
 export default function Profile() {
-  const { user, signOut, isLoading } = useAuthStore();
+  const { signOut, isLoading } = useAuthStore();
   return (
     <>
       <Navbar />
@@ -14,21 +15,7 @@ export default function Profile() {
         <section className='grid md:grid-cols-2  p-2 gap-2 md:gap-4'>
           <ProfileImage />
 
-          <div>
-            <div>
-              <p className=''>Full Name</p>
-              <p className='text-2xl font-semibold'>{user?.fullName}</p>
-            </div>
-            <div>
-              <p className=''>Username</p>
-              <p className='text-2xl font-semibold'>{user?.username}</p>
-            </div>
-            <div>
-              <p className=''>Email</p>
-              <p className='text-2xl font-semibold'>{user?.email}</p>
-            </div>
-
-          </div>
+          <ProfileData />
         </section>
 
         <div className='w-full flex justify-end'>

@@ -2,7 +2,7 @@ import ReactQuill from 'react-quill';
 import LoadingButton from '../components/LoadingButton';
 import { useEffect, useState } from 'react';
 import { CiImageOn } from 'react-icons/ci';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useBlogStore } from '../store/blogStore';
 import { axiosClient } from '../lib/axios';
 import toast from 'react-hot-toast';
@@ -14,7 +14,7 @@ const categoryBlog = ['Lifestyle', 'Hobby', 'Finance', 'Health', 'Philosophy', '
 export default function BlogEdit() {
   const { blog, setBlog } = useBlogStore()
   const { slug } = useParams();
-  console.log(slug)
+  const navigate = useNavigate()
   const [imagePreview, setimagePreview] = useState('')
   const [value, setValue] = useState('');
   const [image, setImage] = useState('')
@@ -34,19 +34,23 @@ export default function BlogEdit() {
     }
   }
 
-  const handleUpdateImage = async () => {
+  const handleUpdateBlog = async () => {
     try {
       setLoading(true)
       const formData = new FormData()
+      formData.append('title', inputData.title)
+      formData.append('content', value)
+      formData.append('category', inputData.category)
       formData.append('image', image)
 
-      const { data } = await axiosClient.patch(`/api/blog/${slug}/image`, formData, {
+      const { data } = await axiosClient.patch(`/api/blog/${slug}`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
       })
       if (data.success) {
         toast.success(data.message)
+        navigate(`/${data.data.slug}`, { replace: true })
         return
       }
     } catch (error) {
@@ -81,13 +85,13 @@ export default function BlogEdit() {
     <section className='max-w-4xl mx-auto space-y-6 p-2 md:p-4 border-2'>
       <h1 className='text-3xl font-semibold p-2'>Create Blog</h1>
       <label htmlFor="title" className='font-medium text-xl'>Title</label>
+      <span className='text-sm text-slate-500 mx-5'>*Change your title blog mean your blog url will change</span>
       <input
         type="text"
         id='title'
         name='title'
         placeholder='Title'
-        disabled
-        className='w-full p-2 font-semibold border rounded-md cursor-not-allowed'
+        className='w-full p-2 font-semibold border rounded-md'
         onChange={(e) => setInputData({ ...inputData, title: e.target.value })}
       />
       <label htmlFor="category" className='font-medium text-xl'>Category Blog</label>
@@ -131,14 +135,7 @@ export default function BlogEdit() {
           Change image
         </button>
       )}
-      {imagePreview !== blog.image && (
-        <LoadingButton
-          className={'w-full p-2 md:p-4 font-semibold border rounded-md cursor-pointer bg-green-500 hover:bg-green-700'}
-          text='Update Image'
-          onClickHandler={handleUpdateImage}
-          loading={loading}
-        />
-      )}
+
       <label htmlFor="title" className='font-medium text-xl'>Content</label>
       <ReactQuill
         theme="snow"
@@ -153,7 +150,14 @@ export default function BlogEdit() {
           </div>
         )
       }
-
+      {
+        <LoadingButton
+          className={'w-full p-2 md:p-4 font-semibold border rounded-md cursor-pointer bg-green-500 hover:bg-green-700'}
+          text='Update Blog'
+          onClickHandler={handleUpdateBlog}
+          loading={loading}
+        />
+      }
     </section>
 
   )
