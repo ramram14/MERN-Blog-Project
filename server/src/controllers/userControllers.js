@@ -25,7 +25,8 @@ export const updateProfileData = async (req, res) => {
 
     return res.status(200).json({
       success: true,
-      message: 'User profile updated successfully'
+      message: 'User profile updated successfully',
+      data: updatedUser
     })
   } catch (error) {
     console.log('Error in updateProfile controller', error.message);
@@ -62,7 +63,8 @@ export const updateProfileDataEmail = async (req, res) => {
     if (!updatedUser) {
       return res.status(404).json({
         success: false,
-        message: 'User not found'
+        message: 'User not found',
+        data: updatedUser
       })
     }
 
@@ -146,7 +148,8 @@ export const updateProfileDataImage = async (req, res) => {
     }
     return res.status(200).json({
       success: true,
-      message: 'User profile updated successfully'
+      message: 'User profile updated successfully',
+      data: updatedUser
     })
   } catch (error) {
     console.log('Error in updateProfileDataImage controller', error.message);

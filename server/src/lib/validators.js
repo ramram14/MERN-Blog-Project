@@ -28,7 +28,7 @@ export const updateProfileDataPasswordSchema = z.object({
 });
 export const createBlogSchema = z.object({
   title: z.string().min(5, 'Must be at least 5 characters long'),
-  content: z.string(),
+  content: z.string().min(20, 'Must be at least 20 characters long'),
   category: z.enum(['Lifestyle', 'Hobby', 'Finance', 'Health', 'Philosophy', 'Technology', 'Self Improvement', 'Food', 'Education', 'Entertainment'])
 });
 export const updateBlogDataSchema = z.object({

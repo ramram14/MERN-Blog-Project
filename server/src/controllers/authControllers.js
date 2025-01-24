@@ -25,7 +25,8 @@ export const signUp = async (req, res) => {
     makeJWTToken({ id: newUser._id }, res);
     return res.status(201).json({
       success: true,
-      message: 'User sign up successfully'
+      message: 'User sign up successfully',
+      data: newUser
     })
   } catch (error) {
     console.log('Error in signUp controller', error.message);
@@ -59,7 +60,8 @@ export const signIn = async (req, res) => {
     makeJWTToken({ id: existingUser._id }, res);
     return res.status(200).json({
       success: true,
-      message: 'User sign in successfully'
+      message: 'User sign in successfully',
+      data: existingUser
     })
   } catch (error) {
     console.log('Error in signIn controller', error.message);

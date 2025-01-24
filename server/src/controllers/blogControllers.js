@@ -41,7 +41,7 @@ export const getAllBlogs = async (req, res) => {
       .populate({
         path: 'author',
         select: '_id fullName username'
-      })
+      }).sort({ createdAt: -1 });
 
 
 
@@ -73,7 +73,8 @@ export const getBlogBySlug = async (req, res) => {
         path: 'comments',
         populate: {
           path: 'author',
-          select: '_id username profileImage'
+          select: '_id username profileImage',
+          sort: { createdAt: -1 }
         }
       })
     if (!blog) {
