@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
 import Navbar from '../components/navbar/Navbar';
 import { axiosClient } from '../lib/axios';
-import { formatError, timeAgo } from '../lib/utils';
+import { formatError, formatViews, timeAgo } from '../lib/utils';
 import { useNavigate, useSearchParams } from 'react-router';
 import Spinner from '../components/Spinner';
+import { FaRegEye } from "react-icons/fa";
+
 
 export default function HomePage() {
   const [data, setData] = useState([])
@@ -12,7 +14,6 @@ export default function HomePage() {
   const [searchParams] = useSearchParams();
   const search = searchParams.get('search');
   const category = searchParams.get('category');
-  console.log(data);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -53,7 +54,10 @@ export default function HomePage() {
                 </div>
 
                 <div className='p-2 text-xl font-medium h-32 relative'>
-                  <p className='text-sm text-slate-600'>{item.category}</p>
+                  <div className='text-sm text-slate-600 flex justify-between'>
+                    <p >{item.category}</p>
+                    <p className='flex items-center gap-1'>{formatViews(item.views)} <FaRegEye /></p>
+                  </div>
                   <h1>{item.title}</h1>
 
                   <span className='text-xs text-slate-700 absolute bottom-0 left-0'>@{item.author.username}</span>

@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { timeAgo } from '../lib/utils';
+import { formatViews, timeAgo } from '../lib/utils';
 import DisplayHTML from '../components/DisplayHTML';
 import Navbar from '../components/navbar/Navbar';
 import FormComment from '../components/blog/FormComment';
@@ -58,7 +58,10 @@ export default function BlogPage() {
                 )}
 
               </div>
-              <p className=' text-slate-600 p-2'>{blog.category}</p>
+              <div className=' text-slate-600 p-2 flex justify-between'>
+                <p>{blog.category}</p>
+                <p>{formatViews(blog.views)} views</p>
+              </div>
               <div className='bg-slate-100 w-full h-52 md:h-72 lg:h-96'>
                 <img
                   src={blog.image}

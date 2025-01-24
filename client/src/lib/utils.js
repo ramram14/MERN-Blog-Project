@@ -14,3 +14,13 @@ export const formatError = (error) => {
 export const timeAgo = (date) => {
   return moment(date).fromNow();
 };
+
+export const formatViews = (views) => {
+  if (views >= 1_000_000) {
+    return `${(views / 1_000_000).toFixed(1)}M views`;
+  } else if (views >= 1_000) {
+    return `${(views / 1_000).toFixed(1)}K views`;
+  } else {
+    return views;
+  }
+};
