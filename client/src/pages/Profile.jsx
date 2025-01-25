@@ -15,10 +15,8 @@ export default function Profile() {
       <Navbar />
       <div className='max-w-4xl mx-auto border mt-5 rounded-md overflow-hidden'>
         <PageDirection direction={'Profile'} />
-
         <section className='grid md:grid-cols-2  p-2 gap-2 md:gap-4'>
           <ProfileImage />
-
           <ProfileData />
         </section>
 

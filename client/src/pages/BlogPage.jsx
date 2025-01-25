@@ -24,6 +24,7 @@ export default function BlogPage() {
     fetchData()
   }, [slug, setBlog])
 
+  // if blog not found we serve page with not found component
   if (blog.length === 0) {
     return <NotFoundPage />
   }

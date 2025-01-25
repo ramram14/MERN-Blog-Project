@@ -20,6 +20,7 @@ export default function CommentBlogContainer() {
   return (
     <div>
       {blog.comments?.length > 0 ? (
+        // Reverse the comments to get the latest comments first
         blog.comments.slice().reverse().map((comment) => (
           <div
             key={comment._id}
@@ -49,6 +50,7 @@ export default function CommentBlogContainer() {
               </div>
             </div>
 
+            {/* If the user is the author of the comment, show the delete button */}
             {comment.author._id === user._id && (
               <div
                 className='cursor-pointer text-xl hover:bg-slate-200 rounded-full p-1 relative hover:text-red-600'

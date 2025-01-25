@@ -26,15 +26,24 @@ export default function FormComment() {
             <button>Sign Up</button>
           )
         }
-        <input
-          type="text"
-          id='comment'
-          name='comment'
-          autoComplete='off'
-          onChange={(e) => setInputData({ content: e.target.value })}
-          placeholder='Write a comment'
-          className='w-full p-2 rounded-lg outline-none border-2 border-gray-200'
-        />
+        {/* We set up the form element also for upload comment with enter button */}
+        <form onSubmit={(e) => {
+          e.preventDefault()
+          handleUploadComment()
+        }}
+          className='w-full'
+        >
+          <input
+            type="text"
+            id='comment'
+            name='comment'
+            autoComplete='off'
+            onChange={(e) => setInputData({ content: e.target.value })}
+            placeholder='Write a comment'
+            className='w-full p-2 rounded-lg outline-none border-2 border-gray-200'
+          />
+          <button type='submit' hidden className='hidden'></button>
+        </form>
       </div>
       <div
         hidden={inputData.content.length === 0}

@@ -30,6 +30,7 @@ export default function HomePage() {
       }
     };
     fetchData();
+    // We fetch the data every time the search or category or search params changes
   }, [category, searchParams, search]);
 
 

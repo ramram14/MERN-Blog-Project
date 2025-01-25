@@ -46,6 +46,7 @@ export const useBlogStore = create((set, get) => ({
       const { data } = await axiosClient.delete(`/api/blog/${slug}`)
       if (data.success) {
         toast.success(data.message)
+        // If success we call setBlogByAuthor again to get newest blog data
         await get().setBlogByAuthor()
       }
 
@@ -58,6 +59,7 @@ export const useBlogStore = create((set, get) => ({
   },
 
   refreshBlog: async () => {
+    // We make new function to refresh blog because we need to get the slug
     const slug = get().slug;
     await get().setBlog(slug)
   },
@@ -71,6 +73,10 @@ export const useBlogStore = create((set, get) => ({
     try {
       const { data } = await axiosClient.post(`/api/comment/${blogId}`, content)
       if (data.success) {
+        // If success we call refreshBlog again to get newest comment data,
+        // Why we dont set the new comment on state to avoid re render?
+        // It can be, but we need to provide data user as well like image url, name and more, It can and i will change it later.
+        // TODO: Set the new comment on state
         await get().refreshBlog()
       }
     } catch (error) {
@@ -90,7 +96,12 @@ export const useBlogStore = create((set, get) => ({
     try {
       const { data } = await axiosClient.delete(`/api/comment/${commentId}`)
       if (data.success) {
-        await get().refreshBlog()
+        set((prev) => ({
+          blog: {
+            ...prev.blog,
+            comments: prev.blog.comments.filter((comment) => comment._id !== commentId)
+          }
+        }))
       }
     } catch (error) {
       formatError(error)

@@ -23,6 +23,7 @@ export default function NavSearch() {
       </form>
       <button
         type='button'
+        // We navigate to the home page to handle if user search blog in other page
         onClick={() => navigate(`/?search=${inputSearch}`)}
       >
         <FaSearch

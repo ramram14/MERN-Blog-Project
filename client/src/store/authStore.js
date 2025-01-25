@@ -10,9 +10,9 @@ export const useAuthStore = create()(
       user: null,
       isAuthenticated: false,
       isLoading: false,
-      hydated: false,
+      hydrated: false,
 
-      setHydrated: () => set({ hydated: true }),
+      setHydrated: () => set({ hydrated: true }),
       signUp: async (userData) => {
         try {
           set({ isLoading: true })

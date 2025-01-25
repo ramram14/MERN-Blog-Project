@@ -8,6 +8,7 @@ LoadingButton.propTypes = {
   className: PropTypes.string,
 };
 
+// Reusable Loading button
 export default function LoadingButton({
   loading,
   text,

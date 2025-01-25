@@ -10,9 +10,12 @@ export default function Navbar() {
   return (
     <>
       <nav className='w-full p-2 md:px-6 flex justify-between items-center border-b-2 sticky top-0 bg-white z-50'>
+        {/* Logo for large screens */}
         <div className='text-xs md:text-xl font-bold bg-orange-600 p-1 md:p-2 rounded-lg md:rounded-xl cursor-pointer hidden md:block' onClick={() => navigate('/')}>
           <h1> WriteSphere</h1>
         </div>
+
+        {/* Logo for small screens */}
         <div className='text-xs text-center cursor-pointer md:hidden  font-semibold backdrop-blur-2xl border mr-1 rounded-md' onClick={() => navigate('/')}>
           <h1>Write Sphere</h1>
         </div>
@@ -21,6 +24,7 @@ export default function Navbar() {
           <NavSearch />
           <button
             type='button'
+            // We navigate to the home page to handle if user search blog in other page
             onClick={() => navigate('/')}
             className={`font-medium bg-slate-100 rounded-xl p-3 cursor-pointer hover:border-b hidden md:block`}
           >
