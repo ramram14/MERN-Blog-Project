@@ -13,8 +13,11 @@ export default function Navbar() {
         <div className='text-xs md:text-xl font-bold bg-orange-600 p-1 md:p-2 rounded-lg md:rounded-xl cursor-pointer hidden md:block' onClick={() => navigate('/')}>
           <h1> WriteSphere</h1>
         </div>
+        <div className='text-xs text-center cursor-pointer md:hidden  font-semibold backdrop-blur-2xl border mr-1 rounded-md' onClick={() => navigate('/')}>
+          <h1>Write Sphere</h1>
+        </div>
 
-        <div className='flex items-center gap-2 md:gap-4 justify-end w-full'>
+        <div className='flex items-center gap-1 md:gap-4 justify-end w-full'>
           <NavSearch />
           <button
             type='button'

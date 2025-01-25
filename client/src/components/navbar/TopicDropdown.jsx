@@ -29,13 +29,13 @@ export default function TopicDropdown() {
         <button
           type='button'
           onClick={() => setIsCategoryOpen(!isCategoryOpen)}
-          className='font-medium bg-slate-100 rounded-xl p-1 md:p-3 cursor-pointer hover:border-b'
+          className='font-medium bg-slate-100 dm:rounded-xl p-1 md:p-3 cursor-pointer hover:border-b'
         >
           Topics
         </button>
         <div
           hidden={!isCategoryOpen}
-          className='flex flex-col w-fit absolute rounded-b-xl overflow-hidden p-1 right-0 md:right-auto md:-ml-4'
+          className='flex flex-col w-fit absolute p-1 right-0 md:right-auto md:-ml-4 '
         >
           {categoryBlog.sort().map((category, i) => {
             return (
@@ -50,7 +50,7 @@ export default function TopicDropdown() {
                     navigate(`/?category=${category}`, { replace: true })
                   }
                 }}
-                className='font-medium bg-slate-100 p-2 cursor-pointer hover:border-b text-start border-b border-r border-l hover:bg-slate-200'
+                className='font-medium bg-slate-100 p-2 cursor-pointer hover:border-b text-start border-b border-r border-l hover:bg-slate-200 '
               >
                 {category}
               </button>

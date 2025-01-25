@@ -7,6 +7,7 @@ import BlogCreate from './pages/BlogCreate'
 import BlogPage from './pages/BlogPage'
 import BlogEdit from './pages/BlogEdit'
 import NotFoundPage from './pages/NotFoundPage'
+import MyPost from './pages/MyPost'
 
 function App() {
 
@@ -17,6 +18,7 @@ function App() {
         <Route path='/signin' element={<SignInPage />} />
         <Route path='/' element={<HomePage />} />
         <Route path='/profile' element={<Profile />} />
+        <Route path='/my-post' element={<MyPost />} />
         <Route path='/blog/create' element={<BlogCreate />} />
         <Route path='/:slug' element={<BlogPage />} />
         <Route path='/:slug/edit' element={<BlogEdit />} />

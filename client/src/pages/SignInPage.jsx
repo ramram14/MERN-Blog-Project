@@ -49,7 +49,7 @@ export default function SignInPage() {
           <label htmlFor="password" className='text-xs md:text-lg font-semibold'>Password</label>
           <div className='relative'>
             <input
-              type="password"
+              type={showPassword ? 'text' : 'password'}
               id='password'
               name='password'
               placeholder='Password'

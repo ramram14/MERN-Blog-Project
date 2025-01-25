@@ -20,7 +20,7 @@ export default function CommentBlogContainer() {
   return (
     <div>
       {blog.comments?.length > 0 ? (
-        blog.comments.map((comment) => (
+        blog.comments.slice().reverse().map((comment) => (
           <div
             key={comment._id}
             className='flex justify-between items-start '

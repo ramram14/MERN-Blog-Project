@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { formatViews, timeAgo } from '../lib/utils';
-import DisplayHTML from '../components/DisplayHTML';
 import Navbar from '../components/navbar/Navbar';
 import FormComment from '../components/blog/FormComment';
 import { useBlogStore } from '../store/blogStore';
@@ -10,6 +9,7 @@ import CommentBlogContainer from '../components/blog/CommentBlogContainer';
 import { FaEdit } from "react-icons/fa";
 import { useAuthStore } from '../store/authStore';
 import NotFoundPage from './NotFoundPage';
+import DisplayHTML from '../components/DisplayHTML';
 
 export default function BlogPage() {
   const { slug } = useParams();

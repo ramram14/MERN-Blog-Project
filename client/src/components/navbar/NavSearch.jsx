@@ -8,19 +8,25 @@ export default function NavSearch() {
   const navigate = useNavigate();
   return (
     <div className='flex items-center gap-2'>
-      <input
-        placeholder='Search'
-        type="search"
-        className='p-2 lg:w-96 border-2 rounded-md'
-        value={inputSearch}
-        onChange={(e) => setInputSearch(e.target.value)}
-      />
+      <form onSubmit={(e) => {
+        e.preventDefault()
+        navigate(`/?search=${inputSearch}`)
+      }}>
+        <input
+          placeholder='Search'
+          type="search"
+          className='p-2 lg:w-96 border-2 rounded-md'
+          value={inputSearch}
+          onChange={(e) => setInputSearch(e.target.value)}
+        />
+        <button type='submit' hidden></button>
+      </form>
       <button
         type='button'
         onClick={() => navigate(`/?search=${inputSearch}`)}
       >
         <FaSearch
-          className='text-xl md:text-2xl bg-slate-100 cursor-pointer'
+          className='text-xl hidden md:block md:text-2xl bg-slate-100 cursor-pointer'
         />
       </button>
     </div>

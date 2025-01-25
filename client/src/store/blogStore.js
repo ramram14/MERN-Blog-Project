@@ -24,6 +24,39 @@ export const useBlogStore = create((set, get) => ({
     }
   },
 
+  setBlogByAuthor: async () => {
+    try {
+      set({ loading: true })
+      const { data } = await axiosClient.get(`api/blog/author`);
+      if (data.success) {
+        set({
+          blog: data.data,
+        })
+      }
+    } catch (error) {
+      formatError(error)
+    } finally {
+      set({ loading: false })
+    }
+  },
+
+  deleteBlog: async (slug) => {
+    try {
+      set({ loading: true })
+      const { data } = await axiosClient.delete(`/api/blog/${slug}`)
+      if (data.success) {
+        toast.success(data.message)
+        await get().setBlogByAuthor()
+      }
+
+    } catch (error) {
+      formatError(error)
+    } finally {
+      set({ loading: false })
+    }
+
+  },
+
   refreshBlog: async () => {
     const slug = get().slug;
     await get().setBlog(slug)
