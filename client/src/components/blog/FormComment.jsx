@@ -20,10 +20,8 @@ export default function FormComment() {
     <>
       <div className='flex gap-2 md:gap-4'>
         {
-          isAuthenticated ? (
+          isAuthenticated && (
             <UserIconSmall image={user?.profileImage} />
-          ) : (
-            <button>Sign Up</button>
           )
         }
         {/* We set up the form element also for upload comment with enter button */}
@@ -67,6 +65,18 @@ export default function FormComment() {
           className={'font-medium border rounded-4xl p-3 bg-black text-white cursor-pointer hover:bg-neutral-700'}
         />
       </div>
+      {
+        !isAuthenticated && (
+          <h1 className='text-center font-semibold'>Please
+            {' '}
+            <a
+              href="/signin"
+              className='text-blue-600 underline'
+            >signin</a>
+            {' '}
+            to comment</h1>
+        )
+      }
     </>
   )
 }

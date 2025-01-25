@@ -52,14 +52,14 @@ export default function Navbar() {
               <button
                 type='button'
                 onClick={() => navigate('/signin')}
-                className='font-medium rounded-4xl p-3 cursor-pointer hover:border'
+                className='font-medium rounded-4xl p-3 cursor-pointer hover:border hidden md:block'
               >
                 Sign In
               </button>
               <button
                 type='button'
                 onClick={() => navigate('/signup')}
-                className='font-medium border rounded-4xl p-3 bg-black text-white cursor-pointer hover:bg-neutral-700'
+                className='font-medium border rounded-md md:rounded-4xl P-1 md:p-3 bg-black text-white cursor-pointer hover:bg-neutral-700'
               >
                 Sign Up
               </button>

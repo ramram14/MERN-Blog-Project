@@ -2,7 +2,7 @@ import { useAuthStore } from '../store/authStore';
 import LoadingButton from '../components/LoadingButton';
 import { useNavigate } from 'react-router';
 import { useState } from 'react';
-import { FaRegEye, FaRegEyeSlash } from 'react-icons/fa';
+import { FaRegEye, FaRegEyeSlash, FaArrowLeft } from 'react-icons/fa';
 
 export default function SignInPage() {
   const { signIn, isLoading, isAuthenticated } = useAuthStore();
@@ -27,13 +27,19 @@ export default function SignInPage() {
 
   return (
     <main className='w-screen h-screen relative'>
-      <section className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-lg space-y-6 border-2 p-2 md:p-4 rounded-md'>
+      <FaArrowLeft
+        onClick={() => navigate('/')}
+        size={40}
+        className='absolute top-0 left-0 m-4 text-2xl cursor-pointer bg-slate-400 hover:bg-slate-600 p-2 rounded-full'
+      />
+      <section className='absolute 
+      top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-lg space-y-2 md:space-y-6 border-2 p-2 md:p-4 rounded-md'>
         <h1 className='text-2xl md:text-3xl font-semibold w-fit mx-auto '>Welcome to
-          <span className='bg-orange-500 hover:bg-orange-600 rounded-xl p-2'>
+          <span className='bg-orange-500 hover:bg-orange-600 rounded-xl  p-1 md:p-2'>
             Write Sphere
           </span>
         </h1>
-        <h1 className='text-2xl md:text-3xl font-semibold w-fit mx-auto'>Sign In</h1>
+        <h1 className='text-2xl md:text-2xl font-semibold w-fit mx-auto'>Sign In</h1>
         <div>
           <label htmlFor="email" className='text-xs md:text-lg font-semibold'>Email</label>
           <input
@@ -81,6 +87,6 @@ export default function SignInPage() {
         />
         <p>Don&apos;t have an account?  <a onClick={() => navigate('/signup')} className='text-blue-600 hover:border-b cursor-pointer'>Sign Up</a></p>
       </section>
-    </main>
+    </main >
   )
 }

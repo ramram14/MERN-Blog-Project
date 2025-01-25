@@ -8,7 +8,7 @@ import { AiFillLike, AiOutlineLike } from "react-icons/ai";
 
 
 export default function CommentBlogContainer() {
-  const { user } = useAuthStore()
+  const { user, isAuthenticated } = useAuthStore()
   const { blog, deleteComment, likeOrUnlikeComment } = useBlogStore()
 
   const handleDeleteComment = async (commentId) => {
@@ -42,7 +42,7 @@ export default function CommentBlogContainer() {
                     onClick={() => handleLikeOrDislikeComment(comment._id)}
                     className='p-1 cursor-pointer'
                   >
-                    {comment.LikeUsers.includes(user._id) ? <AiFillLike /> : <AiOutlineLike />}
+                    {isAuthenticated && comment.LikeUsers.includes(user._id) ? <AiFillLike /> : <AiOutlineLike />}
                   </div>
 
                   <h1>{formatViews(comment.LikeUsers.length)}</h1>
@@ -51,7 +51,7 @@ export default function CommentBlogContainer() {
             </div>
 
             {/* If the user is the author of the comment, show the delete button */}
-            {comment.author._id === user._id && (
+            {isAuthenticated && comment.author._id === user._id && (
               <div
                 className='cursor-pointer text-xl hover:bg-slate-200 rounded-full p-1 relative hover:text-red-600'
                 onClick={() => handleDeleteComment(comment._id)}

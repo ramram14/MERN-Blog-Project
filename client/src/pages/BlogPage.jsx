@@ -14,7 +14,7 @@ import DisplayHTML from '../components/DisplayHTML';
 export default function BlogPage() {
   const { slug } = useParams();
   const { blog, setBlog } = useBlogStore()
-  const { user } = useAuthStore()
+  const { user, isAuthenticated } = useAuthStore()
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -32,10 +32,10 @@ export default function BlogPage() {
   return (
     <>
       <Navbar />
-      <section className='max-w-6xl mx-auto space-y-6 p-2 md:p-4 border-2 my-6 rounded-md'>
+      <section className='max-w-6xl mx-auto space-y-6 p-2 pb-0 md:p-4 border-2 my-6 rounded-md'>
         {blog && (
           <div>
-            <div className='border-b-2 p-2'>
+            <div className='border-b-2 p-2 pb-0'>
               <div className='flex gap-2 items-center justify-between border-b p-2'>
                 <div className='flex gap-2 items-center'>
                   <UserIconSmall image={blog.author?.profileImage} />
@@ -47,7 +47,7 @@ export default function BlogPage() {
                 </div>
 
 
-                {blog.author?._id === user._id && (
+                {isAuthenticated && blog.author?._id === user._id && (
                   <button
                     type='button'
                     onClick={() => navigate(`/${blog.slug}/edit`)}
@@ -83,7 +83,8 @@ export default function BlogPage() {
             </div>
 
             <div className='space-y-4'>
-              <h1 className='text-2xl font-bold'>Comments</h1>
+              <h1 className='text-2xl font-bold'>Comments <span className='text-slate-600'>{blog.comments?.length}</span></h1>
+
               <FormComment />
               <CommentBlogContainer />
             </div>
