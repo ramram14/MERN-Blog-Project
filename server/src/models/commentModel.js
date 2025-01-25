@@ -18,7 +18,12 @@ const commentSchema = mongoose.Schema({
   LikeUsers: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
-  }]
+  }],
+  likesNumber: {
+    type: Number,
+    default: 0,
+    min: 0
+  }
 }, {
   timestamps: true
 })

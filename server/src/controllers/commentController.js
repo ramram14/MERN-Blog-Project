@@ -66,4 +66,43 @@ export const deleteCommentByCommentId = async (req, res) => {
       message: 'Internal Server Error'
     })
   }
+};
+
+export const likeOrUnlikeComment = async (req, res) => {
+  try {
+    const user = req.userData
+    const { commentId } = req.params
+
+    const comment = await Comment.findById(commentId)
+
+    if (!comment) {
+      return res.status(404).json({
+        success: false,
+        message: 'Comment not found'
+      })
+    }
+
+    const userIndex = comment.LikeUsers.indexOf(user._id)
+
+    if (userIndex === -1) {
+      comment.LikeUsers.push(user._id)
+      comment.likesNumber = comment.likesNumber + 1
+    } else {
+      comment.LikeUsers.splice(userIndex, 1)
+      comment.likesNumber = comment.likesNumber - 1
+    }
+
+    await comment.save();
+
+    return res.status(200).json({
+      success: true,
+      message: 'Comment liked/unliked successfully',
+    })
+  } catch (error) {
+    console.log('Error in likeOrUnlikeCOmment controller', error.message)
+    return res.status(500).json({
+      success: false,
+      message: 'Internal Server Error'
+    })
+  }
 }

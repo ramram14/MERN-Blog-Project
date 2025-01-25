@@ -1,7 +1,6 @@
 import { updateImage, uploadImageOnCloudinary } from '../lib/cloudinary.js';
 import { generateSlug } from '../lib/utils.js';
 import Blog from '../models/blogModel.js';
-import Comment from '../models/commentModel.js';
 
 
 export const createBlog = async (req, res) => {
@@ -90,6 +89,7 @@ export const getAllBlogs = async (req, res) => {
 
 export const getBlogBySlug = async (req, res) => {
   try {
+
     const { slug } = req.params;
     const blog = await Blog.findOneAndUpdate({
       slug
@@ -116,9 +116,6 @@ export const getBlogBySlug = async (req, res) => {
         message: 'Blog not found'
       })
     }
-    const comments = await Comment.find({
-      blog: blog._id
-    })
 
     return res.status(200).json({
       success: true,
@@ -136,13 +133,14 @@ export const getBlogBySlug = async (req, res) => {
 
 export const getBlogsByCategory = async (req, res) => {
   try {
+
     const { category } = req.query;
     if (!category) {
       return res.status(400).json({ message: 'Category is required' });
     }
 
     const blogs = await Blog.find({ category },
-      '_id title image slug category author likeUsers createdAt updatedAt'
+      '_id title image slug category author likeUsers createdAt updatedAt views'
     )
       .populate('author', '_id fullName username')
       .sort({ createdAt: -1 });
@@ -154,6 +152,35 @@ export const getBlogsByCategory = async (req, res) => {
     })
   } catch (error) {
     console.log('Error in getBlogsByCategory controller', error.message)
+    return res.status(500).json({
+      success: false,
+      message: 'Internal Server Error'
+    })
+  }
+};
+
+export const getBlogsByAuthor = async (req, res) => {
+  try {
+
+    const user = req.userData;
+
+    const blogs = await Blog.find({ author: user._id },
+      '_id title image slug category author likeUsers createdAt updatedAt views')
+      .sort({ createdAt: -1 });
+    if (!blogs) {
+      return res.status(404).json({
+        success: false,
+        message: 'Blogs not found'
+      })
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: 'Blogs fetched successfully',
+      data: blogs
+    })
+  } catch (error) {
+    console.log('Error in getBlogsByAuthor controller', error.message)
     return res.status(500).json({
       success: false,
       message: 'Internal Server Error'

@@ -1,5 +1,5 @@
 import express from 'express';
-import { checkBlogSlugIsValid, createBlog, deleteBlog, getAllBlogs, getBlogBySlug, getBlogsByCategory, updateBlogData } from '../controllers/blogControllers.js';
+import { checkBlogSlugIsValid, createBlog, deleteBlog, getAllBlogs, getBlogBySlug, getBlogsByAuthor, getBlogsByCategory, updateBlogData } from '../controllers/blogControllers.js';
 import authMiddleware from '../middleware/authMiddleware.js';
 import upload, { handleMulterError } from '../middleware/multerMiddleware.js';
 import { validateData } from '../middleware/validationMiddleware.js';
@@ -20,12 +20,16 @@ router.post('/',
 // Get all blogs
 router.get('/', getAllBlogs);
 
-// Get blog by category
+// Get blogs by category
 router.get('/category', getBlogsByCategory)
 
+// Get blogs by author
+router.get('/author',
+  authMiddleware,
+  getBlogsByAuthor
+)
 // Get blog by slug
 router.get('/:slug', getBlogBySlug);
-
 
 // Update blog data
 router.patch('/:slug',
