@@ -39,6 +39,12 @@ export default function HomePage() {
       <Navbar />
       <section className='max-w-7xl mx-auto border-2 min-h-dvh relative'>
         {loading && <Spinner />}
+        <div className=' p-5 md:p-10 '>
+          <h1 className='text-2xl font-bold'>Welcome back to Write Sphere, </h1>
+          <p>&quot;where your thoughts find their voice through words.&quot;</p>
+        </div>
+
+        <h1 className='text-2xl font-bold m-2 md:m-4'>Newest</h1>
         <main className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 p-2 overflow-hidden'>
           {data.length > 0 ? (
             data.map((item) => (

@@ -7,9 +7,11 @@ import { formatError } from '../lib/utils';
 import toast from 'react-hot-toast';
 import { categoryBlog } from '../lib/data';
 import Navbar from '../components/navbar/Navbar';
+import { useAuthStore } from '../store/authStore';
+import SigninModal from '../components/SigninModal';
 
 export default function BlogCreate() {
-
+  const { isAuthenticated } = useAuthStore()
   const [inputData, setInputData] = useState({
     title: '',
     content: '',
@@ -62,6 +64,11 @@ export default function BlogCreate() {
   return (
     <>
       <Navbar />
+      {
+        !isAuthenticated && (
+          <SigninModal />
+        )
+      }
       <section className='max-w-4xl mx-auto space-y-6 p-2 md:p-4 border-2'>
         <h1 className='text-3xl font-semibold p-2'>Create Blog</h1>
         <label htmlFor="title" className='font-medium text-xl'>Title</label>
