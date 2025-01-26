@@ -7,6 +7,7 @@ export const makeJWTToken = (tokenData, res) => {
 
   res.cookie(process.env.USER_TOKEN_NAME, token, {
     httpOnly: true,
+    sameSite: 'Nonegit ',
     secure: process.env.NODE_ENV !== 'development',
     maxAge: 7 * 24 * 60 * 60 * 1000
   });
