@@ -1,6 +1,6 @@
 import axios from 'axios';
-
+const development = null /*'http://localhost:8000'*/
 export const axiosClient = axios.create({
-  baseURL: 'https://write-sphere-backend.vercel.app',
+  baseURL: development ? development : 'https://write-sphere-backend.vercel.app',
   withCredentials: true
 })
