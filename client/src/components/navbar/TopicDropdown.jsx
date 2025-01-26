@@ -29,7 +29,7 @@ export default function TopicDropdown() {
         <button
           type='button'
           onClick={() => setIsCategoryOpen(!isCategoryOpen)}
-          className='font-medium bg-slate-100 dm:rounded-xl p-1 md:p-3 cursor-pointer hover:border-b'
+          className='font-medium bg-orange-600 md:bg-slate-100 rounded-md md:rounded-xl p-1 md:p-3 cursor-pointer hover:border-b '
         >
           Topics
         </button>

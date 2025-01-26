@@ -3,6 +3,7 @@ import { useAuthStore } from '../../store/authStore';
 import UserIconSmall from '../profile/UserIconSmall';
 import LoadingButton from '../LoadingButton';
 import { useBlogStore } from '../../store/blogStore';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -13,6 +14,7 @@ export default function FormComment() {
   })
   const { loading, createComment } = useBlogStore()
   const { isAuthenticated, user } = useAuthStore();
+  const navigate = useNavigate()
   const handleUploadComment = async () => {
     await createComment(inputData)
   }
@@ -69,10 +71,10 @@ export default function FormComment() {
         !isAuthenticated && (
           <h1 className='text-center font-semibold'>Please
             {' '}
-            <a
-              href="/signin"
-              className='text-blue-600 underline'
-            >signin</a>
+            <span
+              onClick={() => navigate('/signin')}
+              className='text-blue-600 underline cursor-pointer hover:text-blue-800'
+            >signin</span>
             {' '}
             to comment</h1>
         )

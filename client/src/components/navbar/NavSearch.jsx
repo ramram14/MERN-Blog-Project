@@ -7,15 +7,17 @@ export default function NavSearch() {
   const [inputSearch, setInputSearch] = useState(searchParams.get('search') || '')
   const navigate = useNavigate();
   return (
-    <div className='flex items-center gap-2'>
+    <div className='flex items-center md:mx-2 gap-2 w-full'>
       <form onSubmit={(e) => {
         e.preventDefault()
         navigate(`/?search=${inputSearch}`)
-      }}>
+      }}
+        className='w-full'
+      >
         <input
           placeholder='Search'
           type="search"
-          className='p-2 lg:w-96 border-2 rounded-md'
+          className='p-2 w-full md::w-96  border-2 rounded-md'
           value={inputSearch}
           onChange={(e) => setInputSearch(e.target.value)}
         />

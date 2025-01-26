@@ -39,8 +39,8 @@ export default function HomePage() {
       <Navbar />
       <section className='max-w-7xl mx-auto border-2 min-h-dvh relative'>
         {loading && <Spinner />}
-        <div className=' p-5 md:p-10 '>
-          <h1 className='text-2xl font-bold'>Welcome back to Write Sphere, </h1>
+        <div className=' p-5 md:p-10 bg-amber-600'>
+          <h1 className='text-2xl font-bold '>Welcome back to Write Sphere, </h1>
           <p>&quot;where your thoughts find their voice through words.&quot;</p>
         </div>
 
