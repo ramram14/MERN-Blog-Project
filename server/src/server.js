@@ -20,6 +20,9 @@ app.use(cors({
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
+app.get('/', (req, res) => {
+  res.send('Hello World');
+});
 app.use('/api/auth', authRoutes);
 app.use('/api/user', userRoutes);
 app.use('/api/blog', blogRoutes);
