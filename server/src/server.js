@@ -28,7 +28,15 @@ app.use('/api/user', userRoutes);
 app.use('/api/blog', blogRoutes);
 app.use('/api/comment', commentRoutes);
 
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
-  connectDb();
-})
+const startServer = async () => {
+  try {
+    await connectDb();
+    app.listen(port, () => {
+      console.log(`Server is running on port ${port}`);
+    });
+  } catch (error) {
+    console.error('Failed to connect to database:', error);
+  }
+};
+
+startServer();
